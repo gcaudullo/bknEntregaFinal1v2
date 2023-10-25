@@ -3,7 +3,7 @@ const { json } = require('stream/consumers');
 class ProductManager {
     constructor(path) {
         this.path = path;
-        this.counter = 1; 
+        this.counter = 1;
         this.initializeIdCounter();
     }
 
@@ -25,7 +25,7 @@ class ProductManager {
 
     async addProduct(productData) {
         const { title, description, code, price, status, stock, category, thumbnails } = productData;
-        
+
         if (!title, !description, !code, !price, !status, !stock, !category) {
             console.error('The title, description, code, price, status, stock and category fields are required 🎯');
             return;
@@ -47,7 +47,7 @@ class ProductManager {
                     stock,
                     category,
                     thumbnails: thumbnails || [] // Si no se proporciona thumbnails, establece un array vacío
-                    
+
                 }
                 this.counter++
                 products.push(newProduct)
@@ -121,7 +121,7 @@ class ProductManager {
         }
         if (thumbnails) {
             products[position].thumbnail = thumbnail;
-        }       
+        }
         await saveJsonInFile(this.path, products);
         console.log(`Product id ${id} updated! 😎`);
     }
@@ -161,65 +161,124 @@ const saveJsonInFile = (path, data) => {
 async function test() {
     //Creo una instancia de la clase “ProductManager”
     const productManager = new ProductManager('./products.json');
-    //Llamo “getProducts” recién creada la instancia
-    // console.log('Ejecuto getProducts');
-    // await productManager.getProducts()
-    //     .then(products => {
-    //         console.log(products);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-    // console.log('Agrego Products');
-    await productManager.addProduct('Apple Ipad 10 9 10th', 'Tablet de ultima generación', 5698, 959, true, 20, 'Tablet',  ['./img/cel-tecno/apple-ipad-10-9-10th-gen-wifi-1', './img/cel-tecno/apple-ipad-10-9-10th-gen-wifi-2'])
+    const product1 = {
+        "title": 'Apple Ipad 10 9 10th',
+        "description": 'Tablet de ultima generación',
+        "code": 5698,
+        "price": 959,
+        "status": true,
+        "stock": 20,
+        "category": 'Tablet',
+        "thumbnails": ['./img/cel-tecno/apple-ipad-10-9-10th-gen-wifi-1', './img/cel-tecno/apple-ipad-10-9-10th-gen-wifi-2']
+    }
+    await productManager.addProduct(product1)
 
-    // console.log('Ejecuto getProducts');
-    // await productManager.getProducts()
-    //     .then(products => {
-    //         console.log(products);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-
-    // Pruebo agregar un producto sin un parametro obligatorio.
-    // await productManager.addProduct('Apple Ipad 10 9 10th', 959, './img/cel-tecno/apple-ipad-10-9-10th-gen-wifi', 5698, 20);
-    // Agrego producto con todos los parametros.
-    // await productManager.addProduct('Apple Ipad 10 9 10th', 'Tablet de ultima generación', 959, './img/cel-tecno/apple-ipad-10-9-10th-gen-wifi', 5698, 20);
-    // Me fijo si lo agrego al array de productos
-    // console.log('Ejecuto getProducts');
-    // await productManager.getProducts()
-    //     .then(products => {
-    //         console.log(products);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-
-
-    //Pruebo agregar un producto con un codigo ya existente.
-    // await productManager.addProduct('Cel Samsung Galaxy A04', 'Uno de los celulares mas venididos del 2022', 179, './img/cel-tecno/cel-samsung-galaxy-a04', 5698, 20);
-    // Agrego segundo producto
-    await productManager.addProduct('Cel Samsung Galaxy A04', 'Uno de los celulares mas venididos del 2022', 5699, 179, true, 20, 'Celular',['./img/cel-tecno/cel-samsung-galaxy-a04-1', './img/cel-tecno/cel-samsung-galaxy-a04-2']);
-    //Me fijo si lo agrego al array de productos
-    // console.log('Ejecuto getProducts');
-    // await productManager.getProducts()
-    //     .then(products => {
-    //         console.log(products);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-
-    // Agrego dos productos más.
-    await productManager.addProduct('Cel Xiaomi Redmi 10a', 'Uno de los celulares mas venididos del 2021', 5700, 153, true, 20, 'Celular',['./img/cel-tecno/xiaomi-redmi-10a-1', './img/cel-tecno/xiaomi-redmi-10a-2']);
-    await productManager.addProduct('ASUS Vivobook m513ia bq322t', 'Computador portatil de gran performace', 5701, 800, true, 10, 'Notebook', ['./img/notebooks/asus-vivobook-m513ia-1','./img/notebooks/asus-vivobook-m513ia-2']);
-    await productManager.addProduct('HP-14\" dq2088wm HD Core i5', 'Computador portatil de gran procesador', 5702, 849, true, 10, 'Notebook',['./img/notebooks/hp-14-dq2088wm']);
-    await productManager.addProduct('Enxuta smart tv 24\" ledenx1224d1k', 'TV Smart la mas vendida de 2022', 5703, 134, true, 10, 'TV&Video',['./img/tv-video/enxuta-smart-tv-24-ledenx1224d1k']);
-    await productManager.addProduct('JBL wave 300 tws headphone', 'Excelentes auriculares', 5704, 89, true, 10, 'TV&Video', ['./img/tv-video/jbl-wave-300-tws']);
-    await productManager.addProduct('Minicomponente LG Cl88', 'Gran potencia de sonido', 5705, 780, true, 10, 'TV&Video', ['./img/tv-video/minicomponente-lg-cl88']);
-    await productManager.addProduct('Nintendo Switch Oled 64gb', 'La mejor Consola de Nintendo', 5706, 800, true, 10, 'TV&Video', ['./img/tv-video/nintendo-switch-oled-64gb']);
-    await productManager.addProduct('Smart TV LG 55\" oled oled55c2psa', 'TV de ultima generación', 5707, 2849, true, 10, 'TV&Video');
+    const product2 = {
+        "title": 'Cel Samsung Galaxy A04',
+        "description": 'Uno de los celulares mas venididos del 2022',
+        "code": 5699,
+        "price": 179,
+        "status": true,
+        "stock": 20,
+        "category": 'Celular',
+        "thumbnails": ['./img/cel-tecno/cel-samsung-galaxy-a04-1', './img/cel-tecno/cel-samsung-galaxy-a04-2']
+    }
+    await productManager.addProduct(product2);
+    const product3 = {
+        "title": 'Cel Xiaomi Redmi 10a',
+        "description": 'Uno de los celulares mas venididos del 2021',
+        "code": 5700,
+        "price": 153,
+        "status": true,
+        "stock": 20,
+        "category": 'Celular',
+        "thumbnails": ['./img/cel-tecno/xiaomi-redmi-10a-1', './img/cel-tecno/xiaomi-redmi-10a-2']
+    }
+    await productManager.addProduct(product3);
+    
+    const product4 = {
+        "title": 'ASUS Vivobook m513ia bq322t',
+        "description": 'Computador portatil de gran performace',
+        "code": 5701,
+        "price": 800,
+        "status": true,
+        "stock": 10,
+        "category": 'Notebook',
+        "thumbnails": ['./img/notebooks/asus-vivobook-m513ia-1', './img/notebooks/asus-vivobook-m513ia-2']
+    }
+    await productManager.addProduct(product4);
+    
+    const product5 = {
+        "title": 'HP-14\" dq2088wm HD Core i5',
+        "description": 'Computador portatil de gran procesador',
+        "code": 5702,
+        "price": 849,
+        "status": true,
+        "stock": 10,
+        "category": 'Notebook',
+        "thumbnails": ['./img/notebooks/hp-14-dq2088wm']
+    }
+    await productManager.addProduct(product5);
+   
+    const product6 = {
+        "title": 'Enxuta smart tv 24\" ledenx1224d1k',
+        "description": 'TV Smart la mas vendida de 2022',
+        "code": 5703,
+        "price": 134,
+        "status": true,
+        "stock": 10,
+        "category": 'TV&Video',
+        "thumbnails": ['./img/tv-video/enxuta-smart-tv-24-ledenx1224d1k']
+    }
+    await productManager.addProduct(product6);
+    
+    const product7 = {
+        "title": 'JBL wave 300 tws headphone',
+        "description": 'Excelentes auriculares',
+        "code": 5704,
+        "price": 89,
+        "status": true,
+        "stock": 20,
+        "category": 'TV&Video',
+        "thumbnails": ['./img/tv-video/jbl-wave-300-tws']
+    }
+    await productManager.addProduct(product7);
+    
+    const product8 = {
+        "title": 'Minicomponente LG Cl88',
+        "description": 'Gran potencia de sonido',
+        "code": 5705,
+        "price": 780,
+        "status": true,
+        "stock": 10,
+        "category": 'TV&Video',
+        "thumbnails": ['./img/tv-video/minicomponente-lg-cl88']
+    }
+    await productManager.addProduct(product8);
+    
+    const product9 = {
+        "title": 'Nintendo Switch Oled 64gb',
+        "description": 'La mejor Consola de Nintendo',
+        "code": 5706,
+        "price": 800,
+        "status": true,
+        "stock": 20,
+        "category": 'TV&Video',
+        "thumbnails": ['./img/tv-video/nintendo-switch-oled-64gb']
+    }
+    await productManager.addProduct(product9);
+    
+    const product10 = {
+        "title": 'Smart TV LG 55\" oled oled55c2psa',
+        "description": 'TV de ultima generación',
+        "code": 5707,
+        "price": 2849,
+        "status": true,
+        "stock": 10,
+        "category": 'TV&Video',
+        "thumbnails": []
+    }
+    await productManager.addProduct(product10);
 
     console.log('Ejecuto getProducts');
     await productManager.getProducts()
@@ -277,7 +336,7 @@ async function test() {
     //     .catch(error => {
     //         console.error(error);
     //     });
- }
+}
 
 test();
 

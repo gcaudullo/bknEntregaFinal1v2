@@ -27,14 +27,14 @@ router.get('/products/:pId', (req, res) => {
     productManager.getProductById(parseInt(pId))
         .then(product => {
             if (product === 'Product Not found! 😨') {
-                res.status(404).json({ error: product });
+                res.status(404).json({ error: 'Product Not found! 😨' });
             } else {
                 res.status(200).json(product);
             }
         })
         .catch(error => {
             console.error(error);
-            res.status(500).json({ error: 'Error obteniendo producto.' });
+            res.status(500).json({ error: 'Error obtaining product.' });
         });
 });
 
@@ -45,7 +45,7 @@ router.post('/products', (req, res) => {
         })
         .catch(error => {
             console.error(error);
-            res.status(500).json({ error: 'Error al agregar el producto.' });
+            res.status(500).json({ error: 'Error adding product.' });
         });
 });
 
@@ -56,11 +56,10 @@ router.put('/products/:pid', (req, res) => {
     // Llama al método updateProduct de ProductManager para actualizar el producto
     productManager.updateProduct(parseInt(pid), productData)
         .then(() => {
-            res.status(200).json({ message: 'Producto actualizado exitosamente' });
+            res.status(200).json({ message: 'Product updated successfully' });
         })
         .catch(error => {
-            console.error('Error al actualizar el producto:', error);
-            res.status(500).json({ error: 'Error al actualizar el producto' });
+            res.status(500).json({ error: 'Error updating product' });
         });
 });
 
@@ -70,11 +69,10 @@ router.delete('/products/:pid', (req, res) => {
     // Llama al método deleteProduct de ProductManager para eliminar el producto
     productManager.deleteProduct(parseInt(pid))
         .then(() => {
-            res.json({ message: 'Producto eliminado exitosamente' });
+            res.status(200).json({ message: 'Product successfully removed' });
         })
         .catch(error => {
-            console.error('Error al eliminar el producto:', error);
-            res.status(500).json({ error: 'Error al eliminar el producto' });
+            res.status(500).json({ error: 'Error deleting product' });
         });
 });
 

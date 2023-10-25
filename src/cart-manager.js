@@ -67,7 +67,7 @@ class CartManager {
             // Si el producto ya existe, incrementa la cantidad
             existingProduct.quantity += quantity;
         } else {
-            // Si el producto no existe en el carrito, agrégalo
+            // Si el producto no existe en el carrito, lo agrego
             cart.products.push({ product: productId, quantity: quantity });
         }
         await saveJsonInFile(this.path, carts); // Guarda los carritos actualizados
@@ -98,5 +98,5 @@ async function test() {
 
 test();
 
-// Exporta la clase ProductManager para que esté disponible en otros archivos
+// Exporta la clase CartManager para que esté disponible en otros archivos
 module.exports = CartManager;

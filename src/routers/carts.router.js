@@ -7,11 +7,11 @@ const cartManager = new CartManager('./carts.json');
 router.post('/carts', (req, res) => {
     cartManager.addCart()
         .then(() => {
-            res.status(201).json({ message: 'Carrito creado exitosamente' });
+            res.status(201).json({ message: 'Cart created successfully' });
         })
         .catch(error => {
             console.error(error);
-            res.status(500).json({ error: 'Error al crear carrito.' });
+            res.status(500).json({ error: 'Error creating cart.' });
         })
 });
 
@@ -21,14 +21,14 @@ router.get('/carts/:cid', (req, res) => {
     cartManager.getCartById(parseInt(cartId))
         .then(products => {
             if (products === -1) {
-                res.status(404).json({ error: 'No existe un carrito con ese ID.' });
+                res.status(404).json({ error: 'There is no cart with that ID.' });
             } else {
-                res.json(products);
+                res.status(200).json(products);
             }
         })
         .catch(error => {
             console.error(error);
-            res.status(500).json({ error: 'Error obteniendo producto.' });
+            res.status(500).json({ error: 'Error obtaining product.' });
         });
 });
 
@@ -43,7 +43,7 @@ router.post('/carts/:cid/product/:pid', (req, res) => {
             res.status(201).json({ message: `Product id ${productId} added to Cart id ${cartId}!😎` });
         })
         .catch(error => {
-            res.status(500).json({ error: 'Error al agregar producto al carrito' });
+            res.status(500).json({ error: 'Error adding product to cart' });
         });
 });
 

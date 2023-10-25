@@ -88,7 +88,7 @@
 		"code": 5704,
 		"price": 89,
 		"status": true,
-		"stock": 10,
+		"stock": 20,
 		"category": "TV&Video",
 		"thumbnails": [
 			"./img/tv-video/jbl-wave-300-tws"
@@ -114,7 +114,7 @@
 		"code": 5706,
 		"price": 800,
 		"status": true,
-		"stock": 10,
+		"stock": 20,
 		"category": "TV&Video",
 		"thumbnails": [
 			"./img/tv-video/nintendo-switch-oled-64gb"
@@ -122,13 +122,13 @@
 	},
 	{
 		"id": 10,
-		"title": "Samsung Galaxy TAB 8",
-		"description": "Tablet de ultima generación",
-		"code": 5800,
-		"price": 120,
+		"title": "Smart TV LG 55\" oled oled55c2psa",
+		"description": "TV de ultima generación",
+		"code": 5707,
+		"price": 2849,
 		"status": true,
-		"stock": 20,
-		"category": "Tablet",
+		"stock": 10,
+		"category": "TV&Video",
 		"thumbnails": []
 	}
 ]
