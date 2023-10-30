@@ -1,6 +1,8 @@
-const fs = require('fs');
-const { json } = require('stream/consumers');
-class ProductManager {
+import fs from 'fs';
+import { json } from 'stream/consumers'
+// const fs = require('fs');
+// const { json } = require();
+export default class ProductManager {
     constructor(path) {
         this.path = path;
         this.counter = 1;
@@ -341,4 +343,4 @@ async function test() {
 test();
 
 // Exporta la clase ProductManager para que esté disponible en otros archivos
-module.exports = ProductManager;
+// export default ProductManager;

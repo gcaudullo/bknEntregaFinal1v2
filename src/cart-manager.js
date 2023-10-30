@@ -1,6 +1,6 @@
-const fs = require('fs');
-const { json } = require('stream/consumers');
-class CartManager {
+import fs from 'fs';
+import { json } from 'stream/consumers'
+export default class CartManager {
     constructor(path) {
         this.path = path;
         this.counter = 1;
@@ -99,4 +99,4 @@ async function test() {
 test();
 
 // Exporta la clase CartManager para que esté disponible en otros archivos
-module.exports = CartManager;
+// export default CartManager;
