@@ -1,5 +1,6 @@
-import ProductManager from '../product-manager.js';
-const productManager = new ProductManager('./products.json');
+// import ProductManager from '../product-manager.js';
+// const productManager = new ProductManager('./products.json');
+
 const addProductForm = document.getElementById('addProductForm');
 const deleteProductForm = document.getElementById('deleteProductForm');
 const socket = io();
@@ -23,20 +24,20 @@ deleteProductForm.addEventListener('submit', (e) => {
 });
 
 socket.on('listOfProducts', async (products) => {
-    console.log(products);
-    await actualizarVista(products);
+  console.log(products);
+  await actualizarVista(products);
 });
 
-socket.on('productAdded', async (product) => {
-    const products = await productManager.getProducts();
-    await actualizarVista(products);
-});
+// socket.on('productAdded', async (product) => {
+//   const products = await productManager.getProducts();
+//   await actualizarVista(products);
+// });
 
-// Evento para eliminar un producto
-socket.on('productDeleted', async (productId) => {
-    const products = await productManager.getProducts();
-    await actualizarVista(products);
-});
+// // Evento para eliminar un producto
+// socket.on('productDeleted', async (productId) => {
+//   const products = await productManager.getProducts();
+//   await actualizarVista(products);
+// });
 
 async function actualizarVista(products) {
     const productListDiv = document.getElementById('product-list');
@@ -44,8 +45,8 @@ async function actualizarVista(products) {
     productListDiv.innerHTML = '';
     // Itera sobre la lista de productos y crea elementos HTML para mostrar cada producto.
     products.forEach((product) => {
-        const productDiv = document.createElement('div');
-        productDiv.innerHTML = `
+      const productDiv = document.createElement('div');
+      productDiv.innerHTML = `
         <p><strong>Id</strong>: ${product.id}</p>
         <p><strong>Title</strong>: ${product.title}</p>
         <p><strong>Description</strong>: ${product.description}</p>
@@ -56,7 +57,8 @@ async function actualizarVista(products) {
         <p><strong>Category</strong>: ${product.category}</p>
         <hr/>
       `;
-        // Agrega el elemento del producto al div de la lista de productos.
-        productListDiv.appendChild(productDiv);
+      // Agrega el elemento del producto al div de la lista de productos.
+      productListDiv.appendChild(productDiv);
     });
-}
+  }
+  

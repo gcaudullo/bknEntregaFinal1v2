@@ -37,7 +37,7 @@ export const init = (httpServer) => {
     socketClient.on('deleteProduct', async (productId) => {
       try {
         // Lógica para eliminar un producto a través de WebSocket
-        await productManager.deleteProduct(productId);
+        await productManager.deleteProduct(parseInt(productId));
         io.emit('productDeleted', productId);
 
         // Vuelve a enviar la lista actualizada después de eliminar un producto
