@@ -282,31 +282,31 @@ async function test() {
     }
     await productManager.addProduct(product10);
 
-    console.log('Ejecuto getProducts');
-    await productManager.getProducts()
-        .then(products => {
-            console.log(products);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // console.log('Ejecuto getProducts');
+    // await productManager.getProducts()
+    //     .then(products => {
+    //         console.log(products);
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
 
-    // // Pruebo traer un producto de id inexistente
-    await productManager.getProductById(15)
-        .then(product => {
-            console.log('Product By Id:', product);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    // // Pruebo traer un producto de id existente
-    await productManager.getProductById(3)
-        .then(product => {
-            console.log('Product By Id:', product);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    // // // Pruebo traer un producto de id inexistente
+    // await productManager.getProductById(15)
+    //     .then(product => {
+    //         console.log('Product By Id:', product);
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
+    // // // Pruebo traer un producto de id existente
+    // await productManager.getProductById(3)
+    //     .then(product => {
+    //         console.log('Product By Id:', product);
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     });
 
     // const data = {
     //     id: 1,
