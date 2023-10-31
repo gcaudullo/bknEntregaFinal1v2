@@ -1,7 +1,7 @@
 import ProductManager from '../product-manager.js';
 import express from 'express';
 const router = express.Router();
-const productManager = new ProductManager('./products.json');
+export const productManager = new ProductManager('./products.json');
 
 
 
