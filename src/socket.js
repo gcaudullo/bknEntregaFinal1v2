@@ -8,6 +8,7 @@ export const init = (httpServer) => {
 
   io.on('connection', (socketClient) => {
     // Enviar la lista de productos cuando un cliente se conecta
+    console.log('Cliente conectado: ', socketClient.id);
     const sendProductList = async () => {
       try {
         const products = await productManager.getProducts();
@@ -24,11 +25,8 @@ export const init = (httpServer) => {
     socketClient.on('addProduct', async (productData) => {
       try {
         // Lógica para agregar el producto a través de WebSocket
-        await productManager.addProduct(productData);
+        productManager.addProduct(productData);
         io.emit('productAdded', productData);
-
-        // Vuelve a enviar la lista actualizada después de agregar un producto
-        sendProductList();
       } catch (error) {
         console.error('Error al agregar un producto:', error);
       }
@@ -39,12 +37,13 @@ export const init = (httpServer) => {
         // Lógica para eliminar un producto a través de WebSocket
         await productManager.deleteProduct(parseInt(productId));
         io.emit('productDeleted', productId);
-
-        // Vuelve a enviar la lista actualizada después de eliminar un producto
-        sendProductList();
       } catch (error) {
         console.error('Error al eliminar un producto:', error);
       }
+    });
+
+    socketClient.on('disconnect', () => {
+      console.log('Cliente desconectado: ', socketClient.id);
     });
   });
 };

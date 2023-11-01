@@ -1,5 +1,3 @@
-import ProductManager from '../product-manager.js';
-const productManager = new ProductManager('./products.json');
 const addProductForm = document.getElementById('addProductForm');
 const deleteProductForm = document.getElementById('deleteProductForm');
 const socket = io();
@@ -11,7 +9,6 @@ addProductForm.addEventListener('submit', (e) => {
     formData.forEach((value, key) => {
         productData[key] = value;
     });
-    console.log(productData)
     socket.emit('addProduct', productData);
 });
 
@@ -23,19 +20,16 @@ deleteProductForm.addEventListener('submit', (e) => {
 });
 
 socket.on('listOfProducts', async (products) => {
-    console.log(products);
     await actualizarVista(products);
 });
 
-socket.on('productAdded', async (product) => {
-    const products = await productManager.getProducts();
-    await actualizarVista(products);
+socket.on('productAdded', async (productData) => {
+    console.log('Producto agregado:', productData);
 });
 
 // Evento para eliminar un producto
 socket.on('productDeleted', async (productId) => {
-    const products = await productManager.getProducts();
-    await actualizarVista(products);
+    console.log('Producto eliminado:', productId);
 });
 
 async function actualizarVista(products) {
