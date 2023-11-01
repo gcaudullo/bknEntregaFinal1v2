@@ -6,44 +6,42 @@ const productManager = new ProductManager('./products.json');
 export const init = (httpServer) => {
   const io = new Server(httpServer);
 
-  io.on('connection', (socketClient) => {
-    // Enviar la lista de productos cuando un cliente se conecta
-    console.log('Cliente conectado: ', socketClient.id);
-    const sendProductList = async () => {
-      try {
-        const products = await productManager.getProducts();
-        console.log(products)
-        socketClient.emit('listOfProducts', products);
-      } catch (error) {
-        console.error('Error al obtener la lista de productos:', error);
-      }
-    };
+  io.on('connection', async (socketClient) => {
+    try {
+      // Enviar la lista de productos cuando un cliente se conecta
+      console.log('Cliente conectado: ', socketClient.id);
+      const products = await productManager.getProducts();
+      socketClient.emit('listOfProducts', products);
 
-    // Llama a la función para enviar la lista de productos cuando un cliente se conecta
-    sendProductList();
-
-    socketClient.on('addProduct', async (productData) => {
-      try {
+      socketClient.on('addProduct', async (productData) => {
         // Lógica para agregar el producto a través de WebSocket
         productManager.addProduct(productData);
-        io.emit('productAdded', productData);
-      } catch (error) {
-        console.error('Error al agregar un producto:', error);
-      }
-    });
 
-    socketClient.on('deleteProduct', async (productId) => {
-      try {
+        // Obtén la lista actualizada de productos
+        const updatedProducts = await productManager.getProducts();
+
+        // Emite la lista actualizada a través de WebSockets
+        io.emit('productAdded', productData);
+        io.emit('listOfProducts', updatedProducts);
+      });
+
+      socketClient.on('deleteProduct', async (productId) => {
         // Lógica para eliminar un producto a través de WebSocket
         await productManager.deleteProduct(parseInt(productId));
-        io.emit('productDeleted', productId);
-      } catch (error) {
-        console.error('Error al eliminar un producto:', error);
-      }
-    });
 
-    socketClient.on('disconnect', () => {
-      console.log('Cliente desconectado: ', socketClient.id);
-    });
+        // Obtén la lista actualizada de productos
+        const updatedProducts = await productManager.getProducts();
+
+        // Emite la lista actualizada a través de WebSockets
+        io.emit('productDeleted', productId);
+        io.emit('listOfProducts', updatedProducts);
+      });
+
+      socketClient.on('disconnect', () => {
+        console.log('Cliente desconectado: ', socketClient.id);
+      });
+    } catch (error) {
+      console.error('Error en la conexión del cliente:', error);
+    }
   });
 };

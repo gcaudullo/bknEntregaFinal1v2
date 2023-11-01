@@ -340,7 +340,7 @@ async function test() {
     //     });
 }
 
-test();
+// test();
 
 // Exporta la clase ProductManager para que esté disponible en otros archivos
 // export default ProductManager;
