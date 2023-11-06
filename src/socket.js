@@ -15,7 +15,7 @@ export const init = (httpServer) => {
 
       socketClient.on('addProduct', async (productData) => {
         // Lógica para agregar el producto a través de WebSocket
-        productManager.addProduct(productData);
+        await productManager.addProduct(productData);
 
         // Obtén la lista actualizada de productos
         const updatedProducts = await productManager.getProducts();
